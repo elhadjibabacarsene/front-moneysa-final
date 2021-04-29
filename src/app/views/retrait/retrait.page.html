@@ -1,0 +1,135 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row id="row-top">
+        <ion-col class="col-top">
+          <ion-icon name="home" id="home-icon" color="tertiary" (click)="dismissModal()"></ion-icon>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../../assets/images/logo-money-sa.png" id="logo"></ion-img>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+      <ion-row id="row-second">
+        <ion-col class="col-top"></ion-col>
+        <ion-col class="col-top" id="col-title">
+          <ion-icon name="arrow-redo-outline" color="tertiary"></ion-icon>
+          <span id="title">Retrait</span>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-grid>
+      <!-- Code transaction -->
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Code</ion-label>
+            <ion-input type="text" formControlName="codeTransaction" (keyup)="onKeyUp($event.target.value)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- Segment -->
+      <div *ngIf="isCodeOk">
+      <ion-row>
+        <ion-col>
+          <ion-segment value="beneficiaire" [(ngModel)]="segmentModel" [ngModelOptions]="{standalone: true}">
+            <ion-segment-button value="beneficiaire">Bénéficiare</ion-segment-button>
+            <ion-segment-button value="emetteur">Emetteur</ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+      <!-- Beneficiare -->
+      <div *ngIf="segmentModel === 'beneficiaire'">
+        <ion-row formGroupName="clientRetrait">
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">N°CNI</ion-label>
+              <ion-input type="text" formControlName="numCNI" *ngIf="!retraitNotAuthorize"></ion-input>
+              <ion-input type="text" formControlName="numCNI" [value]="transactionInfos?.clientRetrait?.numCNI" *ngIf="retraitNotAuthorize"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div class="list">
+          <ion-row>
+            <ion-col class="label-alert-title">Nom & Prénom</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-value">{{transactionInfos?.clientRetrait?.nom.toUpperCase()+ ' ' + transactionInfos?.clientRetrait?.prenom}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-title">montant à recevoir</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-value">{{transactionInfos?.montant}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-title">Téléphone</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-value">{{transactionInfos?.clientRetrait?.telephone}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-title">Date d'envoi</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-alert-value">{{transactionInfos?.dateDepot}}</ion-col>
+          </ion-row>
+        </div>
+      </div>
+      <!-- Emetteur -->
+      <div *ngIf="segmentModel === 'emetteur'">
+        <div class="list">
+        <ion-row>
+          <ion-col class="label-alert-title">N°CNI</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-value">{{transactionInfos?.clientDepot?.numCNI}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-title">Nom & Prénom</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-value">{{transactionInfos?.clientDepot?.nom.toUpperCase()+ ' ' + transactionInfos?.clientDepot?.prenom}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-title">montant envoyé</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-value">{{transactionInfos?.montant}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-title">Téléphone</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-value">{{transactionInfos?.clientDepot?.telephone}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-title">Date d'envoi</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="label-alert-value">{{transactionInfos?.dateDepot}}</ion-col>
+        </ion-row>
+        </div>
+      </div>
+      <ion-row class="row-signin-btn btn-submit">
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button type="submit" shape="round" color="primary" expand="block" size="large" (click)="showConfirmModal(this.transactionInfos)" [disabled]="retraitNotAuthorize">
+            Retirer
+          </ion-button>
+        </ion-col>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button type="submit" shape="round" color="primary" expand="block" size="large" (click)="removeTransation()">
+            Annuler
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      </div>
+    </ion-grid>
+  </form>
+</ion-content>

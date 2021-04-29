@@ -1,0 +1,44 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row id="row-top">
+        <ion-col class="col-top">
+          <ion-icon name="home" id="home-icon" color="tertiary" (click)="dismissModal()"></ion-icon>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../../assets/images/logo-money-sa.png" id="logo"></ion-img>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+      <ion-row id="row-second">
+        <ion-col class="col-top"></ion-col>
+        <ion-col class="col-top" id="col-title">
+          <ion-icon name="alarm-outline" color="tertiary"></ion-icon>
+          <span id="title">Transaction en cours</span>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="ion-grid-padding">
+    <!-- Titles -->
+    <ion-row class="row-title-table">
+      <ion-col>Date</ion-col>
+      <ion-col>Montant</ion-col>
+      <ion-col>Frais</ion-col>
+      <ion-col>Etat</ion-col>
+    </ion-row>
+    <ng-container *ngFor="let depot of transactionsDepots">
+      <ion-row class="row-content-table">
+        <ion-col class="ion-margin">{{depot.dateDepot | date: 'shortDate'}}</ion-col>
+        <ion-col class="ion-margin">{{depot.montant}}</ion-col>
+        <ion-col class="ion-margin">{{depot.frais}}</ion-col>
+        <ion-col>
+          <ion-button size="small" class="ion-margin" (click)="statutChange(depot)">{{getBtnValue(depot.statut)}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>

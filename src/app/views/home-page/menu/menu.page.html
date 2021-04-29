@@ -1,0 +1,131 @@
+<ion-menu side="start" menuId="first" contentId="main" class="menu-burger">
+  <ion-content>
+    <ion-list id="menu-list">
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="col-top">
+          <ion-img src="../../assets/images/menu-burger.svg" id="menu-burger" (click)="openFirst()"></ion-img>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../assets/images/logo-money-sa.png" id="logo"></ion-img>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../assets/images/avatar.svg" id="avatar"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <!--Affichage soldes-->
+    <ion-row id="row-solde">
+      <ion-col id="solde" size="7">
+        <ion-text>
+          <p class="text-1">Mon solde disponible</p>
+          <p class="text-2">150 000 <span>FCFA</span></p>
+          <p class="text-3">Mise à jour le 22/02/21 à 13:15</p>
+        </ion-text>
+      </ion-col>
+      <ion-col id="icon-eye">
+        <ion-icon name="eye-off" color="tertiary"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <!--Menu-->
+    <ion-row id="row-menu">
+      <!--Depot-->
+      <ion-col size="12" (click)="presentModal('Depot')">
+        <span class="icon-left">
+          <ion-icon name="arrow-redo-outline" color="primary"></ion-icon>
+        </span>
+        Dépôt
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Retrait-->
+      <ion-col size="12" (click)="presentModal('Retrait')">
+        <span class="icon-left">
+          <ion-icon name="arrow-undo-outline" color="primary"></ion-icon>
+        </span>
+        Retrait
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Mes transactions-->
+      <ion-col size="12" (click)="presentModal('Transactions')">
+        <span class="icon-left">
+          <ion-icon name="refresh-outline" color="primary"></ion-icon>
+        </span>
+        Mes transactions
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Mes transactions en cours-->
+      <ion-col size="12" (click)="presentModal('Transactions-Encours')">
+        <span class="icon-left">
+          <ion-icon name="refresh-outline" color="primary"></ion-icon>
+        </span>
+        Transactions en cours
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Toutes mes transactions-->
+      <ion-col size="12" (click)="presentModal('All-Transactions')">
+        <span class="icon-left">
+          <ion-icon name="refresh-circle-outline" color="primary"></ion-icon>
+        </span>
+        Toutes mes transactions
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Mes commissions-->
+      <ion-col size="12" (click)="presentModal('commissions')">
+        <span class="icon-left">
+          <ion-icon name="wallet-outline" color="primary"></ion-icon>
+        </span>
+        Mes commissions
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Calculateur-->
+      <ion-col size="12" (click)="presentModal('calculatrice')">
+        <span class="icon-left">
+          <ion-icon name="calculator" color="primary"></ion-icon>
+        </span>
+        Calculateur de frais
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+      <!--Deconnexion-->
+      <ion-col size="12">
+        <span class="icon-left">
+          <ion-icon name="log-out-outline" color="primary"></ion-icon>
+        </span>
+        Déconnexion
+        <span class="icon-right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-content>

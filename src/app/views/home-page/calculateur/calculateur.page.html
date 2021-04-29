@@ -1,0 +1,47 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row id="row-top">
+        <ion-col class="col-top">
+          <ion-icon name="home" id="home-icon" color="tertiary" (click)="dismissModal()"></ion-icon>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../../assets/images/logo-money-sa.png" id="logo"></ion-img>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+      <ion-row id="row-second">
+        <ion-col class="col-top"></ion-col>
+        <ion-col class="col-top" id="col-title">
+          <ion-icon name="arrow-redo-outline" color="tertiary"></ion-icon>
+          <span id="title">Calculatrice Frais</span>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Montant</ion-label>
+            <ion-input type="number"
+                       ngModel
+                       name="montant"
+                       required
+                       #montant="ngModel"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button type="submit" shape="round" color="primary" expand="block" size="large" [disabled]="!f.valid">
+            Calculer
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

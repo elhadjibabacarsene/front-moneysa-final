@@ -1,0 +1,102 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row id="row-top">
+        <ion-col class="col-top">
+          <ion-icon name="home" id="home-icon" color="tertiary" (click)="dismissModal()"></ion-icon>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../../assets/images/logo-money-sa.png" id="logo"></ion-img>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+      <ion-row id="row-second">
+        <ion-col class="col-top"></ion-col>
+        <ion-col class="col-top" id="col-title">
+          <ion-icon name="arrow-redo-outline" color="tertiary" (click)="closeModal()"></ion-icon>
+          <span id="title">Dépôt</span>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-segment value="emetteur" [(ngModel)]="segmentModel">
+          <ion-segment-button value="emetteur">Emetteur</ion-segment-button>
+          <ion-segment-button value="beneficiaire">Bénéficiare</ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+    <form [formGroup]="form">
+      <ion-row>
+        <ion-col>
+          <div *ngIf="segmentModel === 'emetteur'">
+            <ion-list>
+              <div formGroupName="clientDepot">
+                <ion-item>
+                  <ion-label position="floating">N°CNI</ion-label>
+                  <ion-input type="text" formControlName="numCNI"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Nom</ion-label>
+                  <ion-input type="text" formControlName="nom"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Prénom</ion-label>
+                  <ion-input type="text" formControlName="prenom"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Téléphone</ion-label>
+                  <ion-input type="text" formControlName="telephone"></ion-input>
+                </ion-item>
+              </div>
+              <ion-item>
+                <ion-label position="floating">Montant</ion-label>
+                <ion-input type="number" formControlName="montant" (focusout)="calculFrais({montant: this.montant})"></ion-input>
+              </ion-item>
+              <ion-row class="row-frais">
+                <ion-col size="6"></ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Frais</ion-label>
+                    <ion-input class="fixedLabel" type="number" placeholder="0" [value]="frais" color="primary" [readonly]="true"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-item>
+                <ion-label position="floating">Total</ion-label>
+                <ion-input type="number" [value]="calculTotal()" placeholder="0" color="primary" [readonly]="true"></ion-input>
+              </ion-item>
+            </ion-list>
+          </div>
+          <div *ngIf="segmentModel === 'beneficiaire'" formGroupName="clientRetrait">
+            <ion-item>
+              <ion-label position="floating">Nom</ion-label>
+              <ion-input type="text" formControlName="nom"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Prénom</ion-label>
+              <ion-input type="text" formControlName="prenom"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Téléphone</ion-label>
+              <ion-input type="text" formControlName="telephone"></ion-input>
+            </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-signin-btn btn-submit">
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button type="submit" shape="round" color="primary" expand="block" size="large" (click)="showConfirmModal(this.form.value)">
+            Suivant
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>

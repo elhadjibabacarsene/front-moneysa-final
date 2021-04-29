@@ -1,0 +1,49 @@
+@import "../../retrait/retrait.page";
+.title{
+  font-size: 12.8px;
+  color: var(--ion-color-title);
+}
+.col-title{
+  border-bottom: 2px solid var(--ion-color-secondary);
+}
+.row-title-table{
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+}
+.row-content-table{
+  font-size: 11px;
+  text-align: center;
+}
+ion-select{
+  background: white;
+  border-radius: 70px;
+  font-size: 15px;
+  color: black;
+  .select-placeholder{
+  }
+}
+.select-icon-inner{
+  opacity: 3;
+  color: red;
+}
+.date-select{
+  background: white;
+  border-radius: 70px;
+  font-size: 13px;
+}
+#total-title{
+  font-size: 16px;
+  background: var(--ion-color-primary);
+  color: white;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px 0 0 5px ;
+}
+#total-title-price{
+  border-radius: 0 5px 5px 0;
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--ion-color-primary);
+  align-items: center;
+}

@@ -1,0 +1,110 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row id="row-top">
+        <ion-col class="col-top">
+          <ion-icon name="home" id="home-icon" color="tertiary" (click)="dismissModal()"></ion-icon>
+        </ion-col>
+        <ion-col class="col-top">
+          <ion-img src="../../../assets/images/logo-money-sa.png" id="logo"></ion-img>
+        </ion-col>
+        <ion-col class="col-top"></ion-col>
+      </ion-row>
+      <ion-row id="row-second">
+        <ion-col class="col-top" [ngClass]="{'col-title': typeTransaction === 'transactions'}" *ngIf="typeTransaction !== 'commissions'">
+          <ion-icon name="refresh-circle-outline" color="tertiary"></ion-icon>
+          <span class="title">Mes transactions</span>
+        </ion-col>
+        <ng-container *ngIf="typeTransaction === 'commissions'">
+          <ion-col></ion-col>
+          <ion-col class="col-top col-title">
+            <ion-icon name="chevron-forward-outline" color="tertiary"></ion-icon>
+            <span class="title">Commissions</span>
+          </ion-col>
+          <ion-col></ion-col>
+        </ng-container>
+        <ion-col class="col-top" [ngClass]="{'col-title': typeTransaction === 'all-transactions'}" *ngIf="typeTransaction !== 'commissions'">
+          <ion-icon name="refresh-circle-outline" color="tertiary"></ion-icon>
+          <span class="title">Toutes mes transactions</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-grid-padding">
+    <!-- Filter -->
+    <ion-row>
+      <!-- User -->
+      <ion-col *ngIf="typeTransaction==='all-transactions'">
+        <ion-select value="" okText="Choisir" cancelText="Annuler" placeholder="User" (ionChange)="onUserChange($event)">
+          <ion-select-option value="">All</ion-select-option>
+          <ng-container *ngFor="let user of usersAgence">
+            <ion-select-option [value]="user.id">{{user.prenom + ' ' + user.nom}}</ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-col>
+      <!-- Type -->
+      <ion-col>
+        <ion-select value="" okText="Choisir" cancelText="Annuler" placeholder="Type"
+                    (ionChange)="onChangeType($event)">
+          <ion-select-option value="">Tout</ion-select-option>
+          <ion-select-option value="Dépôt">Dépôt</ion-select-option>
+          <ion-select-option value="Retrait">Retrait</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <!-- Du -->
+      <ion-col size="3">
+        <ion-datetime class="date-select" placeholder="Du" done-text="Choisir" cancel-text="Annuler"
+                      (ionChange)="onDateStartChange($event)"></ion-datetime>
+      </ion-col>
+      <!-- Au -->
+      <ion-col size="3">
+        <ion-datetime class="date-select" placeholder="Au" done-text="Choisir" cancel-text="Annuler"
+                      (ionChange)="onDateEndChange($event)"></ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-title-table">
+      <ion-col>Date</ion-col>
+      <ion-col *ngIf="typeTransaction === 'all-transactions'">Utilisateur</ion-col>
+      <ion-col>Type</ion-col>
+      <ion-col>Montant</ion-col>
+      <ion-col *ngIf="typeTransaction !== 'commissions'">Frais</ion-col>
+    </ion-row>
+    <!-- Affichage transaction by userId -->
+    <ng-container>
+      <ng-container
+        *ngFor="let transaction of transactions | filter: {type: filterType}: false">
+        <ion-row class="row-content-table">
+          <ion-col>{{transaction.date | date: 'shortDate'}}</ion-col>
+          <ion-col
+            *ngIf="typeTransaction === 'all-transactions'">{{transaction.prenom + ' ' + transaction.nom}}</ion-col>
+          <ion-col>{{transaction.type}}</ion-col>
+          <ion-col *ngIf="typeTransaction === 'commissions'">{{transaction.commission}}</ion-col>
+          <ion-col *ngIf="typeTransaction !== 'commissions'">{{transaction.montant}}</ion-col>
+          <ion-col *ngIf="typeTransaction !== 'commissions'">{{transaction.frais}}</ion-col>
+
+        </ion-row>
+      </ng-container>
+    </ng-container>
+  </ion-grid>
+  <ion-infinite-scroll threshold="1%" (ionInfinite)="loadMode($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Chargements des transactions..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-row class="ion-padding-end">
+    <ion-col size="5"></ion-col>
+    <ion-col size="3" id="total-title">
+      Total
+    </ion-col>
+    <ion-col size="4" id="total-title-price">
+      <ng-container *ngIf="typeTransaction === 'commissions'">
+        {{totalCommmission}}
+      </ng-container>
+      <ng-container *ngIf="typeTransaction !== 'commissions'">
+        {{total}}
+      </ng-container>
+    </ion-col>
+  </ion-row>
+</ion-content>
